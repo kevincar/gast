@@ -1,7 +1,7 @@
 {
-  "name": "GasT"
+  "name": "TSGasT"
   , "version": "0.1.0"
-  , "description": "GasT is a TAP-compliant testing framework for Google Apps Script(GAS). It provides a simple way to verify that the GAS programs you write behave as expected."
+  , "description": "GasT is a TAP-compliant testing framework for Google Apps Script(GAS). It provides a simple way to verify that the GAS programs you write behave as expected. This fork is for TypeScript"
   , "main": "index.js"
   , "directories": {
     "doc": "doc"
@@ -13,11 +13,12 @@
   }
   , "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-    , "pull": "scripts/pull.sh"
+    , "pull": "scripts/pull.sh",
+    "build": "tsc"
   }
   , "repository": {
     "type": "git"
-    , "url": "git@github.com:zixia/gast.git"
+    , "url": "git@github.com:kevincar/gast.git"
   }
   , "keywords": [
     "test"
@@ -29,5 +30,5 @@
   ]
   , "author": "Zhuohuan LI <zixia@zixia.net>"
   , "license": "MIT"
-  , "homepage": "https://github.com/zixia/gast"
+  , "homepage": "https://github.com/kevincar/gast"
 }
