@@ -6,9 +6,11 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "allowUnreachableCode": false,
-    "allowUnusedLabels": false
+    "allowUnusedLabels": false,
+    "declaration": true,
+    "declarationDir": "./types"
   },
   "include": [
-    "./src/**/*"
+      "./src/**/*"
   ]
 }

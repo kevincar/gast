@@ -15,7 +15,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pull": "scripts/pull.sh",
-    "build": "tsc"
+    "build": "tsc",
+    "build-test": "scripts/build-test.sh"
   },
   "repository": {
     "type": "git",

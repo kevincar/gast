@@ -1,4 +1,4 @@
-import { GasTap, test } from "./gas-tap-lib"
+/// <reference path="../../types/gas-tap-lib.d.ts" />
 
 /**
 *
@@ -24,7 +24,7 @@ function gastTestRunner() {
   ///// GasT include header start
 
   if ((typeof GasTap)==='undefined') { // GasT Initialization. (only if not initialized yet.)
-    eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/kevincar/gast/master/dist/gast-tests.js').getContentText())
+    eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/kevincar/gast/master/dist/gas-tap-lib.js').getContentText())
   } // Class GasTap is ready for use now!
 
   ///// GasT include header end

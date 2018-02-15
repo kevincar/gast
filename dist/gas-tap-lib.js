@@ -1,6 +1,4 @@
-"use strict";
 /// <reference path="../node_modules/@types/google-apps-script/google-apps-script.base.d.ts" />
-Object.defineProperty(exports, "__esModule", { value: true });
 var test = (function () {
     /***************************************************************
     *
@@ -185,7 +183,6 @@ var test = (function () {
     test.counter = 0;
     return test;
 }());
-exports.test = test;
 var GasTap = (function () {
     function GasTap(options) {
         if (options === void 0) { options = null; }
@@ -301,4 +298,3 @@ var GasTap = (function () {
     };
     return GasTap;
 }());
-exports.GasTap = GasTap;

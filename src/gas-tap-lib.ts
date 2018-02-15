@@ -340,5 +340,3 @@ type printFuncType = (...args: any[]) => void;
 interface IOptions {
   loggerFunc: loggerFuncType
 }
-
-export { GasTap, test };
