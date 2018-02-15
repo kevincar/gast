@@ -7,26 +7,26 @@ Github: https://github.com/kevicnar/gast – TypeScript conversion
 
 A GasT unit test file is a javascript which defines GAS unit testing cases. Behind the scenes, each GAS test case is simply a function that takes a description parameter, and outputs in TAP format.
 
-```javascript
+```typescript
 if ((typeof GasTap)==='undefined') { // GasT Initialization. (only if not initialized yet.)
-  eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/zixia/gast/master/src/gas-tap-lib.js').getContentText())
+    eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/zixia/gast/master/src/gas-tap-lib.js').getContentText());
 } // Class GasTap is ready for use now!
 
-var test = new GasTap()
+let tap: GasTap = new GasTap();
 
 function gastTestRunner() {
-  test('do calculation right', function (t) {    
-  	var i = 3 + 4
-    t.equal(i, 7, 'calc 3 + 4 = 7 right')
-  })
+    tap.test('do calculation right', function (t: test) {    
+        let i: number = 3 + 4;
+        t.equal(i, 7, 'calc 3 + 4 = 7 right');
+    });
 
-  test('Spreadsheet exist', function (t) {
-    var url = 'https://docs.google.com/spreadsheets/d/1_KRAtoDz2Pdcj9IPZI007I_gMzRyfmXf7gicgxVwYJc/edit#gid=0'
-	  var ss = SpreadsheetApp.openByUrl(url)
-    t.ok(ss, 'open spreadsheet successful')
-  })
+    tap.test('Spreadsheet exist', function (t: test) {
+        let url: string = 'https://docs.google.com/spreadsheets/d/1_KRAtoDz2Pdcj9IPZI007I_gMzRyfmXf7gicgxVwYJc/edit#gid=0';
+        let ss: GoogleAppsScript.Spreadsheet.Spreadsheet = SpreadsheetApp.openByUrl(url);
+        t.ok(ss, 'open spreadsheet successful');
+    });
 
-  test.finish()
+    tap.finish();
 }
 ```
 
