@@ -1,4 +1,4 @@
-/// <reference path="../node_modules/@types/google-apps-script/google-apps-script.base.d.ts" />
+/// <reference path="../node_modules/@types/google-apps-script/index.d.ts" />
 
 class test {
 
