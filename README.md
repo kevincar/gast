@@ -1,8 +1,9 @@
-# GasT - Google Apps Script Testing-framework
+# GasT - Google Apps Script Testing-framework in TypeScript
 
 GasT is a [TAP](http://testanything.org/)-compatable testing framework for Google Apps Script (GAS). It provides an easy way to verify whether GAS programs you write is behaving as expected or not.
 
-Github: https://github.com/zixia/gast
+Github: https://github.com/zixia/gast – Original Author
+Github: https://github.com/kevicnar/gast – TypeScript conversion
 
 A GasT unit test file is a javascript which defines GAS unit testing cases. Behind the scenes, each GAS test case is simply a function that takes a description parameter, and outputs in TAP format.
 
@@ -31,7 +32,7 @@ function gastTestRunner() {
 
 GasT is most useful when testing javascript in Google Apps Script environment. if you are running outside of GAS environment, there are other TAP testing frameworks available, such as [TAPE - a tap-producing test harness for node and browsers](https://github.com/substack/tape).
 
-Test cases consist of Google Apps Scripts. 
+Test cases consist of Google Apps Scripts.
 
 ## About TAP
 
@@ -97,7 +98,7 @@ Assert that `actual` and `expected` do not have the same structure and nested va
 
 ### `t.throws(fn, msg)`
 
-Assert that function call `fn()` throws an exception. 
+Assert that function call `fn()` throws an exception.
 
 ### `t.notThrow(fn, msg)`
 
@@ -206,7 +207,7 @@ not ok 10 - this should fail # FAIL - TAP fail
 ### Screen Snapshoot
 ![Test Anything Protocol(TAP) for Google Apps Script](https://raw.githubusercontent.com/zixia/gast/master/gast-script-editor-screenshot.png)
 
-An online version of google spreadsheet bounded with GasT google apps scripts can be found here: 
+An online version of google spreadsheet bounded with GasT google apps scripts can be found here:
 * Spreadsheet - https://docs.google.com/spreadsheets/d/19M2DY3hunU6tDQFX5buJmZ_f3E8VFmlqAtodyC-J8Ag/edit#gid=323390886
 * Script editor - https://script.google.com/a/zixia.net/macros/d/Mta4oea1VMIugfSGRo4QrAnKRT9d30hqB/edit?uiv=2&mid=ACjPJvGt4gnXjJwXnToB0jIMEbSvqKUF6vH-uq-m59SqnjXqTQ03NDn_khlNE6ha_mPnrOAYEnyFk80nHYmt_hppO3AgDkO_vVLrYJXzcPPagwRromd0znfLreNFAu4p0rYTC-Jlo-sAKOM
 
@@ -345,7 +346,7 @@ Use v0.2.0 in GAS
 * https://github.com/zixia/gast
 *
 */
-if ((typeof GasTap)==='undefined') { 
+if ((typeof GasTap)==='undefined') {
   eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/zixia/gast/v0.2.0/src/gas-tap-lib.js').getContentText())
 } // Class GasTap is ready for use now!
 ```
