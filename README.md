@@ -3,13 +3,14 @@
 GasT is a [TAP](http://testanything.org/)-compatable testing framework for Google Apps Script (GAS). It provides an easy way to verify whether GAS programs you write is behaving as expected or not.
 
 Github: https://github.com/zixia/gast – Original Author
+
 Github: https://github.com/kevicnar/gast – TypeScript conversion
 
 A GasT unit test file is a javascript which defines GAS unit testing cases. Behind the scenes, each GAS test case is simply a function that takes a description parameter, and outputs in TAP format.
 
 ```typescript
 if ((typeof GasTap)==='undefined') { // GasT Initialization. (only if not initialized yet.)
-    eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/zixia/gast/master/src/gas-tap-lib.js').getContentText());
+    eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/kevincar/gast/master/dist/gas-tap-lib.js').getContentText());
 } // Class GasTap is ready for use now!
 
 let tap: GasTap = new GasTap();
