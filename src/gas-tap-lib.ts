@@ -1,10 +1,18 @@
+/// <reference path="../node_modules/@types/google-apps-script/google-apps-script.base.d.ts" />
+
 class test {
 
-  private counter: number = 0;
-  private succCounter: number = 0;
-  private failCounter: number = 0;
-  private skipCounter: number = 0;
-  private description: string = 'unknown description';
+  static counter: number = 0;
+  succCounter: number = 0;
+  failCounter: number = 0;
+  skipCounter: number = 0;
+  description: string = 'unknown description';
+
+  EXCEPTION_SKIP: string = 'GasTapSkip';
+  EXCEPTION_PASS: string = 'GasTapPass';
+  EXCEPTION_FAIL: string = 'GasTapFail';
+
+  print: printFuncType = null;
 
   /***************************************************************
   *
@@ -12,13 +20,21 @@ class test {
   *
   ****************************************************************/
 
-  constructor(desc: string) {
+  constructor(desc: string, printer: printFuncType) {
     this.description = desc;
+    this.print = printer;
   }
 
-  abstract tapOutput(value: boolean, msg: string): void;
+  private tapOutput(ok: boolean, msg: string): void {
+      this.print(
+          (ok ? 'ok' : 'not ok')
+          + ' ' + ++test.counter
+          + ' - ' + msg
+          + ' - ' + this.description
+      );
+  }
 
-  ok(value: boolean, msg: string): void {
+  ok(value: any, msg: string): void {
     if (value) {
       this.succCounter++;
       this.tapOutput(true, msg);
@@ -28,7 +44,7 @@ class test {
     }
   }
 
-  notOk(value: boolean, msg: string): void {
+  notOk(value: any, msg: string): void {
     if (!value) {
       this.succCounter++;
       this.tapOutput(true, msg)
@@ -38,155 +54,162 @@ class test {
     }
   }
 
-  equal(v1: boolean, v2: boolean, msg: string): void {
+  equal(v1: any, v2: any, msg: string): void {
     if (v1 == v2) {
       this.succCounter++;
       this.tapOutput(true, msg)
     } else {
       this.failCounter++;
-      var error = Utilities.formatString('%s not equal %s', v1, v2)
-      this.tapOutput(false, error + ' - ' + msg)
+      let error: string = Utilities.formatString('%s not equal %s', v1, v2);
+      this.tapOutput(false, error + ' - ' + msg);
     }
   }
 
-  notEqual(v1: boolean, v2: boolean, msg: string): void {
+  notEqual(v1: any, v2: any, msg: string): void {
     if (v1 != v2) {
       this.succCounter++;
       this.tapOutput(true, msg)
     } else {
       this.failCounter++;
-      var error = Utilities.formatString('%s equal %s', v1, v2)
-      this.tapOutput(false, error + ' - ' + msg)
+      let error: string = Utilities.formatString('%s equal %s', v1, v2);
+      this.tapOutput(false, error + ' - ' + msg);
     }
   }
 
-  deepEqual(v1: boolean, v2: boolean, msg: string): void {
+  deepEqual(v1: any, v2: any, msg: string): void {
 
     let isDeepEqual: boolean = recursionDeepEqual(v1, v2);
 
     function recursionDeepEqual(rv1: any, rv2: any): boolean {
       if (!(rv1 instanceof Object) || !(rv2 instanceof Object)) return rv1 == rv2;
 
-      if (Object.keys(rv1).length != Object.keys(rv2).length) return false;
+      if (Object.keys(rv1).length != Object.keys(rv2).length)
+        return false;
 
-      for (let k: any in rv1) {
-        if (!(k in rv2)
+      for (let k in rv1) {
+        if (
+            !(k in rv2)
             || ((typeof rv1[k]) != (typeof rv2[k]))
         ) return false;
 
         if (!recursionDeepEqual(rv1[k], rv2[k])) return false;
       }
 
-      return true
+      return true;
     }
 
     if (isDeepEqual) {
       this.succCounter++;
-      this.tapOutput(true, msg)
+      this.tapOutput(true, msg);
     } else {
       this.failCounter++;
-      var error = Utilities.formatString('%s not deepEqual %s', v1, v2)
-      this.tapOutput(false, error + ' - ' + msg)
+      let error: string = Utilities.formatString('%s not deepEqual %s', v1, v2);
+      this.tapOutput(false, error + ' - ' + msg);
     }
   }
 
-  notDeepEqual(v1, v2, msg) {
+  notDeepEqual(v1: any, v2: any, msg: string): void {
 
-    var isNotDeepEqual = recursionNotDeepEqual(v1, v2)
+    let isNotDeepEqual: boolean = recursionNotDeepEqual(v1, v2);
 
-    recursionNotDeepEqual(rv1, rv2) {
-      if (!(rv1 instanceof Object) || !(rv2 instanceof Object)) return rv1 != rv2
+    function recursionNotDeepEqual(rv1: any, rv2: any) {
+      if (!(rv1 instanceof Object) || !(rv2 instanceof Object)) return rv1 != rv2;
 
-      if (Object.keys(rv1).length != Object.keys(rv2).length) return true
+      if (Object.keys(rv1).length != Object.keys(rv2).length) return true;
 
-      for (var k in rv1) {
+      for (let k in rv1) {
         if (!(k in rv2)
             || ((typeof rv1[k]) != (typeof rv2[k]))
-        ) return true
+        ) return true;
 
-        if (recursionNotDeepEqual(rv1[k], rv2[k])) return true
+        if (recursionNotDeepEqual(rv1[k], rv2[k])) return true;
       }
 
-      return false
+      return false;
     }
 
     if (isNotDeepEqual) {
       this.succCounter++;
-      this.tapOutput(true, msg)
+      this.tapOutput(true, msg);
     } else {
       this.failCounter++;
-      var error = Utilities.formatString('%s notDeepEqual %s', v1, v2)
-      this.tapOutput(false, error + ' - ' + msg)
+      let error: string = Utilities.formatString('%s notDeepEqual %s', v1, v2);
+      this.tapOutput(false, error + ' - ' + msg);
     }
   }
 
-  nan(v1, msg) {
+  nan(v1: any, msg: string): void {
     if (v1 !== v1) {
       this.succCounter++;
-      this.tapOutput(true, msg)
+      this.tapOutput(true, msg);
     } else {
       this.failCounter++;
-      var error = Utilities.formatString('%s not is NaN', v1);
+      let error: string = Utilities.formatString('%s not is NaN', v1);
       this.tapOutput(false, error + ' - ' + msg);
     }
   }
 
-  notNan(v1, msg) {
+  notNan(v1: any, msg: string): void {
     if (!(v1 !== v1)) {
       this.succCounter++;
-      this.tapOutput(true, msg)
+      this.tapOutput(true, msg);
     } else {
       this.failCounter++;
-      var error = Utilities.formatString('%s is NaN', v1);
+      let error: string = Utilities.formatString('%s is NaN', v1);
       this.tapOutput(false, error + ' - ' + msg);
     }
   }
 
-  throws(fn, msg) {
+  throws(fn: anyFunc, msg: string): void {
     try {
-      fn()
+      fn();
 
       this.failCounter++;
-      this.tapOutput(false, 'exception wanted - ' + msg)
+      this.tapOutput(false, 'exception wanted - ' + msg);
     } catch (e) {
       this.succCounter++;
-      this.tapOutput(true, msg)
+      this.tapOutput(true, msg);
     }
   }
 
-  notThrow(fn, msg) {
+  notThrow(fn: anyFunc, msg: string): void {
     try {
-      fn()
+      fn();
 
       this.succCounter++;
-      this.tapOutput(true, msg)
+      this.tapOutput(true, msg);
     } catch (e) {
       this.failCounter++;
-      this.tapOutput(false, 'unexpected exception:' + e.message + ' - ' + msg)
+      this.tapOutput(false, 'unexpected exception:' + e.message + ' - ' + msg);
     }
   }
 
-  skip(msg) {
+  skip(msg: string): void {
     this.skipCounter++;
-    this.tapOutput(true, msg + ' # SKIP')
-    throw EXCEPTION_SKIP
+    this.tapOutput(true, msg + ' # SKIP');
+    throw this.EXCEPTION_SKIP;
   }
 
-  pass(msg) {
+  pass(msg: string): void {
     this.succCounter++;
-    this.tapOutput(true, msg + ' # PASS')
-    throw EXCEPTION_PASS
+    this.tapOutput(true, msg + ' # PASS');
+    throw this.EXCEPTION_PASS;
   }
 
-  fail(msg) {
+  fail(msg: string): void {
     this.failCounter++;
-    this.tapOutput(false, msg + ' # FAIL')
-    throw EXCEPTION_FAIL
+    this.tapOutput(false, msg + ' # FAIL');
+    throw this.EXCEPTION_FAIL;
+  }
+
+  reset(): void {
+      this.succCounter = this.failCounter = this.skipCounter = 0;
+      this.description = 'unknown';
   }
 
 }
 
-class GasTap extends test {
+class GasTap{
 
   /**
   *
@@ -215,22 +238,18 @@ class GasTap extends test {
 
   protected VERSION: string = '0.2.0';
 
-  protected EXCEPTION_SKIP: string = 'GasTapSkip';
-  protected EXCEPTION_PASS: string = 'GasTapPass';
-  protected EXCEPTION_FAIL: string = 'GasTapFail';
-
   protected totalSucc: number = 0;
   protected totalFail: number = 0;
   protected totalSkip: number = 0;
 
   constructor(options: IOptions = null) {
-    if(options && options.loggerFunc) {
-      this.loggerFunc = options.loggerFunc;
-    }
+      if(options && options.loggerFunc) {
+          this.loggerFunc = options.loggerFunc;
+      }
 
-    if(typeof(this.loggerFunc) != 'function') throw Error('options.logger must be a function to accept output parameter');
+      if(typeof(this.loggerFunc) != 'function') throw Error('options.logger must be a function to accept output parameter');
 
-    print('TAP version GasTap v' + this.VERSION + '(BUGGY)')
+      this.print('TAP version GasTap v' + this.VERSION + '(BUGGY)');
 
   }
 
@@ -243,28 +262,24 @@ class GasTap extends test {
   *
   ****************************************************************/
 
-  protected end = this.finish;
-
-  //finish = this.end;
-
-  protected get totalFailed(): number {return this.totalFail;}
-  protected totalSucceed(): number {return this.totalSucc;}
-  protected totalSkipped(): number {return this.totalSkip;}
+  get totalFailed(): number {return this.totalFail;}
+  get totalSucceed(): number {return this.totalSucc;}
+  get totalSkipped(): number {return this.totalSkip;}
 
   test(description: string, run: runFuncType) {
 
-    let t: test = new test(description);
+    let t: test = new test(description, this.print);
 
     try {
 
-      run(this.t);
+      run(t);
 
     } catch ( e /* if e instanceof String */) {
       //      Logger.log('caught exception: ' + e)
 
-      let SKIP_RE: RegExp = new RegExp(this.EXCEPTION_SKIP);
-      let PASS_RE: RegExp = new RegExp(this.EXCEPTION_PASS);
-      let FAIL_RE: RegExp = new RegExp(this.EXCEPTION_FAIL);
+      let SKIP_RE: RegExp = new RegExp(t.EXCEPTION_SKIP);
+      let PASS_RE: RegExp = new RegExp(t.EXCEPTION_PASS);
+      let FAIL_RE: RegExp = new RegExp(t.EXCEPTION_FAIL);
 
       switch (true) {
         case SKIP_RE.test(e):
@@ -276,9 +291,9 @@ class GasTap extends test {
           throw e;
       }
     } finally {
-      this.totalSucc += this.t.succCounter;
-      this.totalFail += this.t.failCounter;
-      this.totalSkip += this.t.skipCounter;
+      this.totalSucc += t.succCounter;
+      this.totalFail += t.failCounter;
+      this.totalSkip += t.skipCounter;
     }
   }
 
@@ -288,25 +303,16 @@ class GasTap extends test {
     this.loggerFunc(message);
   }
 
-  private tapOutput(ok: boolean, msg: string) {
-    this.print(
-      (ok ? 'ok' : 'not ok')
-      + ' ' + ++this.t.counter
-      + ' - ' + msg
-      + ' - ' + this.t.description
-    )
-  }
-
 
   /**
    * Prints a total line to log output. For an example "3 tests, 0 failures"
    *
    * @returns void
    */
-  private finish(): void {
+  finish(): void {
     let totalNum: number = this.totalSucc + this.totalFail + this.totalSkip;
 
-    if (totalNum != (this.t.counter)) {
+    if (totalNum != (test.counter)) {
       throw Error('test counting error!');
     }
 
@@ -327,10 +333,12 @@ class GasTap extends test {
 
 type loggerFuncType = (msg: string) => void;
 type runFuncType = (t: Object) => void;
+type anyFunc = (...args: any[]) => any;
+type tapOutputFuncType = (ok: boolean, msg: string) => void;
+type printFuncType = (...args: any[]) => void;
 
 interface IOptions {
   loggerFunc: loggerFuncType
 }
 
-var GasTap = function (options) {
-}
+export { GasTap, test };

@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var gas_tap_lib_1 = require("./gas-tap-lib");
 /**
 *
 * Put tests in me, then run me!
@@ -18,17 +21,17 @@ function gastTestRunner() {
     */
     //////////////////////////////////////////////////////////////////////////////////////////
     ///// GasT include header start
-    if ((typeof GasTap) === 'undefined') {
+    if ((typeof gas_tap_lib_1.GasTap) === 'undefined') {
         eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/zixia/gast/master/src/gas-tap-lib.js').getContentText());
     } // Class GasTap is ready for use now!
     ///// GasT include header end
     //////////////////////////////////////////////////////////////////////////////////////////
-    var test = new GasTap();
-    test('TAP ok', function (t) {
+    var tap = new gas_tap_lib_1.GasTap();
+    tap.test('TAP ok', function (t) {
         t.ok(true, 'true is ok');
         t.notOk(false, 'false is not ok');
     });
-    test('TAP equal', function (t) {
+    tap.test('TAP equal', function (t) {
         t.equal(true, true, 'true equal true');
         t.notEqual(true, false, 'true not equal false');
         t.equal(99, String(99), 'number 99 equal string "99"');
@@ -42,33 +45,33 @@ function gastTestRunner() {
         t.nan(NaN, 'NaN is NaN');
         t.notNan({}, '{} not is NaN');
     });
-    test('TAP exception', function (t) {
+    tap.test('TAP exception', function (t) {
         t.throws(function () { throw Error('exception'); }, 'exception throwed');
         t.notThrow(function () { return; }, 'no exception found');
     });
-    test('TAP setPrintDriver', function (t) {
-        t.throws(function () { test.setPrintDriver('unknown'); }, 'unknown driver throws exception');
-    });
-    test('TAP skip', function (t) {
+    // tap.test('TAP setPrintDriver', function (t: test) {
+    //   t.throws(function () { test.setPrintDriver('unknown') }, 'unknown driver throws exception')
+    // })
+    tap.test('TAP skip', function (t) {
         t.skip('skipped');
         t.fail('skip failed');
     });
-    test('TAP pass', function (t) {
+    tap.test('TAP pass', function (t) {
         t.pass('passed');
     });
-    test('TAP fail', function (t) {
+    tap.test('TAP fail', function (t) {
         t.fail('this should fail');
     });
-    test('final Stats test', function (t) {
-        //GIVEN - this test suite 
+    tap.test('final Stats test', function (t) {
+        //GIVEN - this test suite
         var totalFailed = 2;
         var totalSucceed = 14;
         var totalSkipped = 1;
         //WHEN - assuming test order maintenence
         //THEN
-        t.equal(test.totalFailed(), totalFailed, "total failed value correct");
-        t.equal(test.totalSucceed(), totalSucceed, "total succeed value correct");
-        t.equal(test.totalSkipped(), totalSkipped, "total skiped value correct");
+        t.equal(tap.totalFailed, totalFailed, "total failed value correct");
+        t.equal(tap.totalSucceed, totalSucceed, "total succeed value correct");
+        t.equal(tap.totalSkipped, totalSkipped, "total skiped value correct");
     });
-    test.finish();
+    tap.finish();
 }
