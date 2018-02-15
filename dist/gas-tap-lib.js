@@ -5,7 +5,7 @@ var test = (function () {
     * T 's functions
     *
     ****************************************************************/
-    function test(desc, printer) {
+    function test(desc, tap) {
         this.succCounter = 0;
         this.failCounter = 0;
         this.skipCounter = 0;
@@ -15,7 +15,7 @@ var test = (function () {
         this.EXCEPTION_FAIL = 'GasTapFail';
         this.print = null;
         this.description = desc;
-        this.print = printer;
+        this.print = tap.print.bind(tap);
     }
     test.prototype.tapOutput = function (ok, msg) {
         this.print((ok ? 'ok' : 'not ok')
@@ -214,8 +214,6 @@ var GasTap = (function () {
         this.totalSucc = 0;
         this.totalFail = 0;
         this.totalSkip = 0;
-        // default output to gas logger.log
-        this.loggerFunc = function (msg) { Logger.log(msg); };
         if (options && options.loggerFunc) {
             this.loggerFunc = options.loggerFunc;
         }
@@ -223,6 +221,11 @@ var GasTap = (function () {
             throw Error('options.logger must be a function to accept output parameter');
         this.print('TAP version GasTap v' + this.VERSION + '(BUGGY)');
     }
+    // default output to gas logger.log
+    GasTap.prototype.loggerFunc = function (msg) {
+        Logger.log(msg);
+    };
+    ;
     Object.defineProperty(GasTap.prototype, "totalFailed", {
         /***************************************************************
         *
@@ -244,7 +247,7 @@ var GasTap = (function () {
         configurable: true
     });
     GasTap.prototype.test = function (description, run) {
-        var t = new test(description, this.print);
+        var t = new test(description, this);
         try {
             run(t);
         }

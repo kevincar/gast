@@ -60,7 +60,7 @@ function gastTestRunner() {
   });
 
   tap.test('TAP exception', function (t: test) {
-      t.throws(function () { throw Error('exception') }, 'exception throwed');
+      t.throws(function () { throw Error('exception') }, 'exception thrown');
       t.notThrow(function () { return }, 'no exception found');
   });
 
@@ -84,7 +84,7 @@ function gastTestRunner() {
   tap.test('final Stats test', function (t: test) {
     //GIVEN - this test suite
     let totalFailed: number = 2;
-    let totalSucceed: number = 14;
+    let totalSucceed: number = 13;
     let totalSkipped: number = 1;
 
     //WHEN - assuming test order maintenence

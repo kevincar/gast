@@ -20,9 +20,9 @@ class test {
   *
   ****************************************************************/
 
-  constructor(desc: string, printer: printFuncType) {
+  constructor(desc: string, tap: GasTap) {
     this.description = desc;
-    this.print = printer;
+    this.print = tap.print.bind(tap);
   }
 
   private tapOutput(ok: boolean, msg: string): void {
@@ -254,7 +254,9 @@ class GasTap{
   }
 
   // default output to gas logger.log
-  protected loggerFunc: loggerFuncType = (msg: string) => { Logger.log(msg) };
+  private loggerFunc(msg: string) {
+      Logger.log(msg)
+  };
 
   /***************************************************************
   *
@@ -268,7 +270,7 @@ class GasTap{
 
   test(description: string, run: runFuncType) {
 
-    let t: test = new test(description, this.print);
+    let t: test = new test(description, this);
 
     try {
 
@@ -297,7 +299,7 @@ class GasTap{
     }
   }
 
-  private print(...args: any[]): void {
+  print(...args: any[]): void {
     let message: string = Utilities.formatString.apply(null, args);
 
     this.loggerFunc(message);

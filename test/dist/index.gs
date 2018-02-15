@@ -44,7 +44,7 @@ function gastTestRunner() {
         t.notNan({}, '{} not is NaN');
     });
     tap.test('TAP exception', function (t) {
-        t.throws(function () { throw Error('exception'); }, 'exception throwed');
+        t.throws(function () { throw Error('exception'); }, 'exception thrown');
         t.notThrow(function () { return; }, 'no exception found');
     });
     // tap.test('TAP setPrintDriver', function (t: test) {
@@ -63,7 +63,7 @@ function gastTestRunner() {
     tap.test('final Stats test', function (t) {
         //GIVEN - this test suite
         var totalFailed = 2;
-        var totalSucceed = 14;
+        var totalSucceed = 13;
         var totalSkipped = 1;
         //WHEN - assuming test order maintenence
         //THEN

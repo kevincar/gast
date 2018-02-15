@@ -14,7 +14,7 @@ declare class test {
     * T 's functions
     *
     ****************************************************************/
-    constructor(desc: string, printer: printFuncType);
+    constructor(desc: string, tap: GasTap);
     private tapOutput(ok, msg);
     ok(value: any, msg: string): void;
     notOk(value: any, msg: string): void;
@@ -61,7 +61,7 @@ declare class GasTap {
     protected totalFail: number;
     protected totalSkip: number;
     constructor(options?: IOptions);
-    protected loggerFunc: loggerFuncType;
+    private loggerFunc(msg);
     /***************************************************************
     *
     * Instance methods export
@@ -71,7 +71,7 @@ declare class GasTap {
     readonly totalSucceed: number;
     readonly totalSkipped: number;
     test(description: string, run: runFuncType): void;
-    private print(...args);
+    print(...args: any[]): void;
     /**
      * Prints a total line to log output. For an example "3 tests, 0 failures"
      *
