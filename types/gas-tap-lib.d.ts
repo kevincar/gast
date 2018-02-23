@@ -1,4 +1,4 @@
-/// <reference path="../node_modules/@types/google-apps-script/google-apps-script.base.d.ts" />
+/// <reference path="../node_modules/@types/google-apps-script/index.d.ts" />
 declare class test {
     static counter: number;
     succCounter: number;
@@ -80,7 +80,7 @@ declare class GasTap {
     finish(): void;
 }
 declare type loggerFuncType = (msg: string) => void;
-declare type runFuncType = (t: Object) => void;
+declare type runFuncType = (t: test) => void;
 declare type anyFunc = (...args: any[]) => any;
 declare type tapOutputFuncType = (ok: boolean, msg: string) => void;
 declare type printFuncType = (...args: any[]) => void;
