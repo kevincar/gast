@@ -1,5 +1,3 @@
-/// <reference path="../node_modules/@types/google-apps-script/index.d.ts" />
-
 class test {
 
   static counter: number = 0;

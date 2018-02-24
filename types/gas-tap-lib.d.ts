@@ -1,4 +1,3 @@
-/// <reference path="../node_modules/@types/google-apps-script/index.d.ts" />
 declare class test {
     static counter: number;
     succCounter: number;
