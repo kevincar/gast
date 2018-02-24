@@ -9,9 +9,9 @@ Github: https://github.com/kevicnar/gast – TypeScript conversion
 A GasT unit test file is a javascript which defines GAS unit testing cases. Behind the scenes, each GAS test case is simply a function that takes a description parameter, and outputs in TAP format.
 
 ```typescript
-/// <reference path="./node_modules/tsgast/types/gas-tap-lib.d.ts />"
+/// <reference path="./node_modules/tsgast/index />"
 if ((typeof GasTap)==='undefined') { // GasT Initialization. (only if not initialized yet.)
-    eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/kevincar/gast/master/dist/gas-tap-lib.js').getContentText());
+    eval(UrlFetchApp.fetch('https://raw.githubusercontent.com/kevincar/gast/master/index.js').getContentText());
 } // Class GasTap is ready for use now!
 
 let tap: GasTap = new GasTap();
