@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "target": "es5",
+    "moduleResolution": "Node",
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
