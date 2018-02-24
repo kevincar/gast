@@ -7,10 +7,7 @@
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": true,
       "allowUnreachableCode": false,
-      "allowUnusedLabels": false,
-      "paths": [
-          "../src/**/*"
-      ]
+      "allowUnusedLabels": false
   },
   "include": [
       "./src/**/*"

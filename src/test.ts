@@ -18,8 +18,8 @@ class test {
   *
   ****************************************************************/
 
-  constructor(desc: string, tap: GasTap) {
-    this.description = desc;
+  constructor(desc: string | null, tap: GasTap) {
+    if(desc) this.description = desc;
     this.print = tap.print.bind(tap);
   }
 

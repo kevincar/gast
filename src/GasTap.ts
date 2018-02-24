@@ -98,10 +98,16 @@ class GasTap{
   /**
    * Prints a total line to log output. For an example "3 tests, 0 failures"
    *
-   * @returns void
+   * @returns tapResults
    */
-  finish(): void {
+  finish(): tapResults {
     let totalNum: number = this.totalSucc + this.totalFail + this.totalSkip;
+
+    let results: tapResults;
+    results.nTotal = totalNum;
+    results.nFailed = this.totalFail;
+    results.nSkipped = this.totalSkip
+    results.nSucceeded = this.totalSucc;
 
     if (totalNum != (test.counter)) {
       throw Error('test counting error!');
@@ -119,5 +125,7 @@ class GasTap{
     }
 
     this.print(msg);
+
+    return results;
   }
 }
