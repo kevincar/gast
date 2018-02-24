@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outFile": "./index.js",
     "target": "es5",
     "moduleResolution": "Node",
     "noImplicitReturns": true,
@@ -8,8 +8,7 @@
     "noImplicitAny": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "declaration": true,
-    "declarationDir": "./types"
+    "declaration": true
   },
   "include": [
       "./src/**/*"

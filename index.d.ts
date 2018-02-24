@@ -1,35 +1,3 @@
-declare class test {
-    static counter: number;
-    succCounter: number;
-    failCounter: number;
-    skipCounter: number;
-    description: string;
-    EXCEPTION_SKIP: string;
-    EXCEPTION_PASS: string;
-    EXCEPTION_FAIL: string;
-    print: printFuncType;
-    /***************************************************************
-    *
-    * T 's functions
-    *
-    ****************************************************************/
-    constructor(desc: string, tap: GasTap);
-    private tapOutput(ok, msg);
-    ok(value: any, msg: string): void;
-    notOk(value: any, msg: string): void;
-    equal(v1: any, v2: any, msg: string): void;
-    notEqual(v1: any, v2: any, msg: string): void;
-    deepEqual(v1: any, v2: any, msg: string): void;
-    notDeepEqual(v1: any, v2: any, msg: string): void;
-    nan(v1: any, msg: string): void;
-    notNan(v1: any, msg: string): void;
-    throws(fn: anyFunc, msg: string): void;
-    notThrow(fn: anyFunc, msg: string): void;
-    skip(msg: string): void;
-    pass(msg: string): void;
-    fail(msg: string): void;
-    reset(): void;
-}
 declare class GasTap {
     /**
     *
@@ -74,9 +42,41 @@ declare class GasTap {
     /**
      * Prints a total line to log output. For an example "3 tests, 0 failures"
      *
-     * @returns void
+     * @returns tapResults
      */
-    finish(): void;
+    finish(): tapResults;
+}
+declare class test {
+    static counter: number;
+    succCounter: number;
+    failCounter: number;
+    skipCounter: number;
+    description: string;
+    EXCEPTION_SKIP: string;
+    EXCEPTION_PASS: string;
+    EXCEPTION_FAIL: string;
+    print: printFuncType;
+    /***************************************************************
+    *
+    * T 's functions
+    *
+    ****************************************************************/
+    constructor(desc: string | null, tap: GasTap);
+    private tapOutput(ok, msg);
+    ok(value: any, msg: string): void;
+    notOk(value: any, msg: string): void;
+    equal(v1: any, v2: any, msg: string): void;
+    notEqual(v1: any, v2: any, msg: string): void;
+    deepEqual(v1: any, v2: any, msg: string): void;
+    notDeepEqual(v1: any, v2: any, msg: string): void;
+    nan(v1: any, msg: string): void;
+    notNan(v1: any, msg: string): void;
+    throws(fn: anyFunc, msg: string): void;
+    notThrow(fn: anyFunc, msg: string): void;
+    skip(msg: string): void;
+    pass(msg: string): void;
+    fail(msg: string): void;
+    reset(): void;
 }
 declare type loggerFuncType = (msg: string) => void;
 declare type runFuncType = (t: test) => void;
@@ -85,4 +85,10 @@ declare type tapOutputFuncType = (ok: boolean, msg: string) => void;
 declare type printFuncType = (...args: any[]) => void;
 interface IOptions {
     loggerFunc: loggerFuncType;
+}
+interface tapResults {
+    nTotal: number;
+    nSucceeded: number;
+    nFailed: number;
+    nSkipped: number;
 }
