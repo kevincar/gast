@@ -103,11 +103,12 @@ var GasTap = (function () {
      */
     GasTap.prototype.finish = function () {
         var totalNum = this.totalSucc + this.totalFail + this.totalSkip;
-        var results;
-        results.nTotal = totalNum;
-        results.nFailed = this.totalFail;
-        results.nSkipped = this.totalSkip;
-        results.nSucceeded = this.totalSucc;
+        var results = {
+            nTotal: totalNum,
+            nFailed: this.totalFail,
+            nSkipped: this.totalSkip,
+            nSucceeded: this.totalSucc
+        };
         if (totalNum != (test.counter)) {
             throw Error('test counting error!');
         }
