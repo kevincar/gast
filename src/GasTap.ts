@@ -103,11 +103,12 @@ class GasTap{
   finish(): tapResults {
     let totalNum: number = this.totalSucc + this.totalFail + this.totalSkip;
 
-    let results: tapResults;
-    results.nTotal = totalNum;
-    results.nFailed = this.totalFail;
-    results.nSkipped = this.totalSkip
-    results.nSucceeded = this.totalSucc;
+    let results: tapResults = {
+        nTotal: totalNum,
+        nFailed: this.totalFail,
+        nSkipped: this.totalSkip,
+        nSucceeded: this.totalSucc
+    };
 
     if (totalNum != (test.counter)) {
       throw Error('test counting error!');
