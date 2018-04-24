@@ -57,10 +57,10 @@ declare class test {
     EXCEPTION_FAIL: string;
     print: printFuncType;
     /***************************************************************
-    *
-    * T 's functions
-    *
-    ****************************************************************/
+     *
+     * T 's functions
+     *
+     ****************************************************************/
     constructor(desc: string | null, tap: GasTap);
     private tapOutput(ok, msg);
     ok(value: any, msg: string): void;

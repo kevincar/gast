@@ -1,4 +1,4 @@
-var GasTap = (function () {
+var GasTap = /** @class */ (function () {
     function GasTap(options) {
         if (options === void 0) { options = null; }
         /**
@@ -123,12 +123,12 @@ var GasTap = (function () {
     };
     return GasTap;
 }());
-var test = (function () {
+var test = /** @class */ (function () {
     /***************************************************************
-    *
-    * T 's functions
-    *
-    ****************************************************************/
+     *
+     * T 's functions
+     *
+     ****************************************************************/
     function test(desc, tap) {
         this.succCounter = 0;
         this.failCounter = 0;
@@ -175,8 +175,7 @@ var test = (function () {
         }
         else {
             this.failCounter++;
-            var error = Utilities.formatString('%s not equal %s', v1, v2);
-            this.tapOutput(false, error + ' - ' + msg);
+            this.tapOutput(false, v1 + " not equal " + v2 + " - " + msg);
         }
     };
     test.prototype.notEqual = function (v1, v2, msg) {
@@ -186,8 +185,7 @@ var test = (function () {
         }
         else {
             this.failCounter++;
-            var error = Utilities.formatString('%s equal %s', v1, v2);
-            this.tapOutput(false, error + ' - ' + msg);
+            this.tapOutput(false, v1 + " equal " + v2 + " - " + msg);
         }
     };
     test.prototype.deepEqual = function (v1, v2, msg) {
@@ -212,8 +210,7 @@ var test = (function () {
         }
         else {
             this.failCounter++;
-            var error = Utilities.formatString('%s not deepEqual %s', v1, v2);
-            this.tapOutput(false, error + ' - ' + msg);
+            this.tapOutput(false, v1 + " not deepEqual " + v2 + " - " + msg);
         }
     };
     test.prototype.notDeepEqual = function (v1, v2, msg) {
@@ -238,8 +235,7 @@ var test = (function () {
         }
         else {
             this.failCounter++;
-            var error = Utilities.formatString('%s notDeepEqual %s', v1, v2);
-            this.tapOutput(false, error + ' - ' + msg);
+            this.tapOutput(false, v1 + " notDeepEqual " + v2 + " - " + msg);
         }
     };
     test.prototype.nan = function (v1, msg) {
@@ -249,8 +245,7 @@ var test = (function () {
         }
         else {
             this.failCounter++;
-            var error = Utilities.formatString('%s not is NaN', v1);
-            this.tapOutput(false, error + ' - ' + msg);
+            this.tapOutput(false, v1 + " not is NaN - " + msg);
         }
     };
     test.prototype.notNan = function (v1, msg) {
@@ -260,8 +255,7 @@ var test = (function () {
         }
         else {
             this.failCounter++;
-            var error = Utilities.formatString('%s is NaN', v1);
-            this.tapOutput(false, error + ' - ' + msg);
+            this.tapOutput(false, v1 + " is NaN - " + msg);
         }
     };
     test.prototype.throws = function (fn, msg) {
